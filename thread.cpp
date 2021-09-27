@@ -27,7 +27,9 @@ void console_splurge(){
 };
 
 void hit42(){
-    std::cout << "Test";
+    //std::cout << "Test";
+    
+    sleep(50)
 };
 
 void mousechk(){

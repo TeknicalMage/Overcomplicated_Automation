@@ -16,6 +16,16 @@ using namespace std;
 
 int hits = 0;
 
+void console_splurge(){
+
+    string baz22 [4] = {"/", "#", "'|", "(" }; 
+    //int baz [4] {1, 2, 3, 4 };  - universal output 
+    int v1 = rand() % 4;  
+    std::cout << baz22[v1];
+
+
+};
+
 void Forwardmove(){
     currentxcor = currentxcor+1;
     std::cout << currentxcor;
@@ -39,11 +49,9 @@ void mouseright(){
 void mouseleft(){
     if (GetCursorPos(&point)) {
         //cout << point.x << "," << point.y << "\n";
-        std::cout << " left 50 px \n\n";
+        std::cout << " left 1 px \n\n";
         //SetCursorPos(point.x - 6.94444444445,point.y);
-        //SetCursorPos(point.x - 1.0,point.y);
-        SetCursorPos(point.x - 50,point.y);
-
+        SetCursorPos(point.x - 1.0,point.y);
         //13.8888888889 - About 1 fucking degree AHHHHHHHHHHHHHHHHHHHHHHHH
 
     }

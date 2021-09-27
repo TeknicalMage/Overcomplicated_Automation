@@ -1,10 +1,13 @@
 #include <iostream>
 #include <string>
 
-#include <Windows.h>
+
+#include <Windows.h>    
 
 #include <chrono>
 #include <thread>
+
+
 
 
 
@@ -13,8 +16,45 @@ using namespace std;
 
 int hits = 0;
 
-void fuckabout(){
-    std::cout << "hit \n\n";
+
+    //C Keypress
+void C_Key_input(){
+    SHORT key;
+    UINT mappedkey;
+    INPUT input = { 0 };
+    key = VkKeyScan('c');
+    mappedkey = MapVirtualKey(LOBYTE(key), 0);
+    input.type = INPUT_KEYBOARD;
+    input.ki.dwFlags = KEYEVENTF_SCANCODE;
+    input.ki.wScan = mappedkey;
+    SendInput(1, &input, sizeof(input));
+    Sleep(20);
+    input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
+    SendInput(1, &input, sizeof(input));
+    //C Keypress
+};
+
+    //F3 Keypress
+void F3_Key_input(){
+    SHORT key;
+    UINT mappedkey;
+    INPUT input = { 0 }; 
+    key = (VK_F3);
+    mappedkey = MapVirtualKey(LOBYTE(key), 0);
+    input.type = INPUT_KEYBOARD;
+    input.ki.dwFlags = KEYEVENTF_SCANCODE;
+    input.ki.wScan = mappedkey;
+    SendInput(1, &input, sizeof(input));
+    C_Key_input();
+    Sleep(20);
+    input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
+    SendInput(1, &input, sizeof(input));
+    //F3 Keypress
+};
+
+    //Move Forward Input
+void fuckaboutforward(){
+    std::cout << "Move Forward \n\n";
     SHORT key;
     UINT mappedkey;
     INPUT input = { 0 };
@@ -24,26 +64,66 @@ void fuckabout(){
     input.ki.dwFlags = KEYEVENTF_SCANCODE;
     input.ki.wScan = mappedkey;
     SendInput(1, &input, sizeof(input));
-    //Moves .210ish blocks per move
-    //.57 blocks ish
-    Sleep(176.767);
+
+    //Keydown time determines Distance
+    Sleep(176000000);
     input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(input));
 };
+    //Move Forward Input        
 
 
+string Coord_Rip (){
+	OpenClipboard(0);
+	const char* op = "Where in tf am I";
+	const size_t ln = strlen(op) + 1;
+	HGLOBAL h = GlobalAlloc(GMEM_MOVEABLE, ln);
+	memcpy(GlobalLock(h), op, ln);
+	GlobalUnlock(h); 
+	CloseClipboard();
+    system("cls");
+    OpenClipboard(0);
+    HANDLE in = GetClipboardData(CF_TEXT); //There are many other formats
+	string value = (char*)in;
+    CloseClipboard();
+    string str2 = " " ;
+    //std::cout << value + '\n'; 
+    value.replace(0,41,str2);   
+    //std::cout << value + '\n';  
+    //test values and whatnot
+	return value;
+ 
+};
 
-void click(){
+void loc_detect(){
+    while(true){
+        //F3 + C -- The Keyboard shortcut to show coords
+        F3_Key_input();
+        cout << Coord_Rip();
+        Sleep(20);
+        //Side notee. Sleep is in Mili seconds
+    }
+}
+
+
+ 
+void tick(){
     while (true){
         Sleep(50);
         if (GetAsyncKeyState(VK_NUMPAD0)) {
             std::cout << hits;
             hits++;
         }
-        if (GetAsyncKeyState(VK_NUMPAD2)) { //new version (King Gore)
-            fuckabout();
+        if (GetAsyncKeyState(VK_NUMPAD2)) { 
+            std::thread forwardm(fuckaboutforward);
+            forwardm.detach();
             std::cout << hits;
             hits++;
+        }
+        if (GetAsyncKeyState(VK_NUMPAD1)) { 
+            std::thread whereami(loc_detect);
+            whereami.detach();
+            Sleep(20);  
         }
 
 
@@ -58,7 +138,7 @@ void click(){
 };
 
 int main(){
-    click();   
+    tick();   
     return 0;
 
 }
