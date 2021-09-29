@@ -46,7 +46,7 @@ void F3_Key_input(){
     input.ki.wScan = mappedkey;
     SendInput(1, &input, sizeof(input));
     C_Key_input();
-    Sleep(20);
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
     input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(input));
     //F3 Keypress
@@ -58,15 +58,20 @@ void fuckaboutforward(){
     SHORT key;
     UINT mappedkey;
     INPUT input = { 0 };
-    key = VkKeyScan('w');
+    key = VkKeyScan('w'); 
     mappedkey = MapVirtualKey(LOBYTE(key), 0);
     input.type = INPUT_KEYBOARD;
     input.ki.dwFlags = KEYEVENTF_SCANCODE;
     input.ki.wScan = mappedkey;
     SendInput(1, &input, sizeof(input));
-
     //Keydown time determines Distance
-    Sleep(176000000);
+    //std::this_thread::sleep_for(std::chrono::milliseconds(339213));
+
+    //std::this_thread::sleep_for(std::chrono::milliseconds(11940)); | 51.587
+    //std::this_thread::sleep_for(std::chrono::milliseconds(11540)); | 49.86
+    //std::this_thread::sleep_for(std::chrono::milliseconds(11640)); | 50.291
+    //std::this_thread::sleep_for(std::chrono::milliseconds(11600)); | 50.076 per input
+    std::this_thread::sleep_for(std::chrono::milliseconds(11600));
     input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(input));
 };
@@ -100,7 +105,7 @@ void loc_detect(){
         //F3 + C -- The Keyboard shortcut to show coords
         F3_Key_input();
         cout << Coord_Rip();
-        Sleep(20);
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
         //Side notee. Sleep is in Mili seconds
     }
 }
@@ -109,7 +114,7 @@ void loc_detect(){
  
 void tick(){
     while (true){
-        Sleep(50);
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
         if (GetAsyncKeyState(VK_NUMPAD0)) {
             std::cout << hits;
             hits++;
@@ -123,7 +128,7 @@ void tick(){
         if (GetAsyncKeyState(VK_NUMPAD1)) { 
             std::thread whereami(loc_detect);
             whereami.detach();
-            Sleep(20);  
+            std::this_thread::sleep_for(std::chrono::milliseconds(20)); 
         }
 
 
@@ -138,6 +143,7 @@ void tick(){
 };
 
 int main(){
+    std::cout << "Script Start\n\n";
     tick();   
     return 0;
 
