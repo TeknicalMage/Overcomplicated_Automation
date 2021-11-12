@@ -58,7 +58,7 @@ void fuckaboutforward(){
     SHORT key;
     UINT mappedkey;
     INPUT input = { 0 };
-    key = VkKeyScan('w'); 
+    key = VkKeyScan('W'); 
     mappedkey = MapVirtualKey(LOBYTE(key), 0);
     input.type = INPUT_KEYBOARD;
     input.ki.dwFlags = KEYEVENTF_SCANCODE;
@@ -69,7 +69,7 @@ void fuckaboutforward(){
 
     //std::this_thread::sleep_for(std::chrono::milliseconds(11940)); | 51.587
     //std::this_thread::sleep_for(std::chrono::milliseconds(11540)); | 49.86
-    //std::this_thread::sleep_for(std::chrono::milliseconds(11640)); | 50.291
+    //std::this_threC:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automationad::sleep_for(std::chrono::milliseconds(11640)); | 50.291
     //std::this_thread::sleep_for(std::chrono::milliseconds(11600)); | 50.076 per input
     std::this_thread::sleep_for(std::chrono::milliseconds(11600000));
     input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;

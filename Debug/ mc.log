@@ -1,0 +1,22 @@
+﻿  ahh copy.cpp
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\ahh copy.cpp(22,8): warning C4102: 'std': unreferenced label
+  Ahh.cpp
+  Allseeing.cpp
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\Allseeing.cpp(1,10): fatal error C1083: Cannot open include file: 'opencv2/core/core.hpp': No such file or directory
+  BezosBreaker.cpp
+  Clip_Rip.cpp
+  coolio_console copy.cpp
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\coolio_console copy.cpp(64): fatal error C1075: '{': no matching token found
+  coolio_console.cpp
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\coolio_console.cpp(64): fatal error C1075: '{': no matching token found
+  Correction.cpp
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\Correction.cpp(54,30): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Inoo.cpp
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\Inoo.cpp(29,19): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Keypress.cpp
+  Movement.cpp
+  ok.cpp
+  thread.cpp
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\thread.cpp(32,5): error C3861: 'sleep': identifier not found
+C:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automation\thread.cpp(33,1): error C2143: syntax error: missing ';' before '}'
+  Generating Code...
