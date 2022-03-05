@@ -1,12 +1,8 @@
 #include <iostream>
 #include <string>
-
-
 #include <Windows.h>    
-
 #include <chrono>
 #include <thread>
-
 #include<iostream>
 #include <cstdlib>
 
@@ -21,15 +17,43 @@ int hits = 0;
 
 //thread mgmt section
 
+//-- This kills the coord printer
 static bool proc_lock = true;
+//-- This kills the coord printer
 
+
+static bool active_movement = true;
+
+int gauge = 0;
 
 //////////////////////
+//////////////////////
+
+static bool que_state_off = true;
+
+void get_fucked(){
+
+    if(que_state_off){
+    ;
+
+    }
+    else{
+        std::cout << "State triggered\n\n";
+    };
+
+
+
+
+};
+
+
+
+
     //C Keypress
 void C_Key_input(){
     SHORT key;
     UINT mappedkey;
-    INPUT input = { 0 };
+    INPUT input = { 0 }; d
     key = VkKeyScan('c');
     mappedkey = MapVirtualKey(LOBYTE(key), 0);
     input.type = INPUT_KEYBOARD;
@@ -37,22 +61,6 @@ void C_Key_input(){
     input.ki.wScan = mappedkey;
     SendInput(1, &input, sizeof(input));
     Sleep(20);
-    input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
-    SendInput(1, &input, sizeof(input));
-    //C Keypress
-};
-
-void E_Key_input(){
-    SHORT key;
-    UINT mappedkey;
-    INPUT input = { 0 };
-    key = (0x20);
-    mappedkey = MapVirtualKey(LOBYTE(key), 0);
-    input.type = INPUT_KEYBOARD;
-    input.ki.dwFlags = KEYEVENTF_SCANCODE;
-    input.ki.wScan = mappedkey;
-    SendInput(1, &input, sizeof(input));
-    Sleep(8000);
     input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(input));
     //C Keypress
@@ -114,7 +122,7 @@ void loc_detect(){
 
     //Move Forward Input
 void forwardmov(){
-
+    active_movement = false;
     //using namespace std::literals::chrono_literals;
 
     std::cout << "Move Forward \n\n";
@@ -134,9 +142,14 @@ void forwardmov(){
     //std::this_thread::sleep_for(std::chrono::milliseconds(11540)); | 49.86
     //std::this_threC:\Users\arcaz\Documents\Programming Projects\Self_Loathing\Overcomplicated_Automationad::sleep_for(std::chrono::milliseconds(11640)); | 50.291
     //std::this_thread::sleep_for(std::chrono::milliseconds(11600)); | 50.076 per input
-    std::this_thread::sleep_for(std::chrono::milliseconds(11600000));
+    //std::this_thread::sleep_for(std::chrono::milliseconds(11600000));
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     input.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
     SendInput(1, &input, sizeof(input));
+    std::cout << "thread ded \n\n";
+    active_movement = true;
+
 
 
     //std::this_thread::sleep_for(1s);
@@ -164,14 +177,17 @@ void tick(){
     while (true){
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         if (GetAsyncKeyState(VK_NUMPAD0)) {
-            std::cout << hits;
-            hits++;
+            std::cout << gauge;
+            //hits++;
         }
         if (GetAsyncKeyState(VK_NUMPAD2)) { 
-            std::thread forwardm(forwardmov);
-            forwardm.detach();
-            std::cout << hits;
-            hits++;
+            if(active_movement){
+                std::thread forwardm(forwardmov);
+                gauge++;
+                forwardm.detach();
+                //std::cout << gauge;
+                }
+
         }
         if (GetAsyncKeyState(VK_NUMPAD1)) { 
             std::thread whereami(loc_detect);
@@ -184,6 +200,14 @@ void tick(){
             std::this_thread::sleep_for(std::chrono::milliseconds(20)); 
         }
         if (GetAsyncKeyState(VK_NUMPAD9)) { 
+            std::thread killall(merk);
+            killall.detach();
+            std::this_thread::sleep_for(std::chrono::milliseconds(20)); 
+        }
+        if (GetAsyncKeyState(VK_NUMPAD5)) { 
+            get_fucked();
+            std::cout << "LOOK AT THE QUEEE \n\n";
+            
             std::thread killall(merk);
             killall.detach();
             std::this_thread::sleep_for(std::chrono::milliseconds(20)); 
@@ -202,9 +226,6 @@ void tick(){
 
 int main(){
     std::cout << "Script Start\n\n";
-    while (true) {
-        E_Key_input();
-    }
     tick();   
     return 0;
 
